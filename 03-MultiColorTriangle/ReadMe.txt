@@ -1,0 +1,1 @@
+Multicolor triangle. Red,green and blue colored

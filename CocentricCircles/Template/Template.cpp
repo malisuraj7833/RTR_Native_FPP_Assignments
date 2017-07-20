@@ -295,7 +295,7 @@ void drawConcentricCircles(struct Color colors[10])
 	GLfloat radius;
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
-	for (radius = 0.10f;radius <= 1.0f;radius = radius + 0.10f)
+	for (radius = 0.1f;radius <= 1.1f;radius = radius + 0.10f)
 	{
 		glColor3f(colors[colorIndex].red, colors[colorIndex].green, colors[colorIndex].blue);
 		if (colorIndex<10)

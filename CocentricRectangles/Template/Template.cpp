@@ -276,7 +276,7 @@ void display(void)
 	colors[6] = { 0.0f,1.0f,1.0f };
 	colors[7] = { 0.5f,0.5f,0.5f };
 	colors[8] = { 1.0f,0.27f,0.0f };
-	colors[9] = { 0.5f,0.0f,0.5f };
+	colors[9] = { 0.25f,0.25f,0.25f };
 
 	//code
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -294,7 +294,7 @@ void drawConcentricRectangles(struct Color colors[10])
 	glLineWidth(1.0f);
 	GLint colorIndex = 0;
 
-	for (GLfloat i = 0.0f;i <= 1.1f;i=i+0.10f)
+	for (GLfloat i = 0.09f;i <= 1.1f;i=i+0.10f)
 	{
 		glBegin(GL_LINE_LOOP);
 		glColor3f(colors[colorIndex].red, colors[colorIndex].green, colors[colorIndex].blue);

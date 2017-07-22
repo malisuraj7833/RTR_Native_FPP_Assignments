@@ -280,10 +280,6 @@ void display(void)
 	colors[8] = { 1.0f,0.27f,0.0f };
 	colors[9] = { 0.5f,0.0f,0.5f };
 
-
-
-
-
 	//code
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -298,7 +294,7 @@ void display(void)
 void drawConcentricTriangles(struct Color colors[10])
 {
 	GLint colorIndex = 0;
-	GLfloat i = 0.1f;
+	GLfloat i = 0.09f;
 	glLineWidth(1.0f);
 	
 	do
@@ -316,7 +312,7 @@ void drawConcentricTriangles(struct Color colors[10])
 			colorIndex = colorIndex + 1;
 		}
 		glEnd();
-	} while (i <= 1.1f);
+	} while (i <= 1.0f);
 }
 
 void resize(int width, int height)

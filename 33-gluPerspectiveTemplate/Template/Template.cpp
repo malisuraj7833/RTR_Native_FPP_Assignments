@@ -1,13 +1,15 @@
 #include <windows.h>
 #include <gl/GL.h>
+#include <gl/GLU.h>
 #include<math.h>
 
 #define WIN_WIDTH 800
-#define WIN_HEIGHT 800
+#define WIN_HEIGHT 600
 
 #define PI 3.1415926535898
 
 #pragma comment(lib,"opengl32.lib")
+#pragma comment(lib,"glu32.lib")
 
 //Prototype Of WndProc() declared Globally
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -63,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline Using Native Windowing : Kundali"),
+		TEXT("OpenGL Fixed Function Pipeline Using Native Windowing : gluPerspective template"),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
 		0,
 		0,
@@ -256,58 +258,33 @@ void initialize(void)
 
 void display(void)
 {
-	void drawKundaliShape();
-	void drawDiagonalsOfKundali();
+
+	void drawMultiClorTriangle();
 
 	//code
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	drawKundaliShape();
-	drawDiagonalsOfKundali();
+	drawMultiClorTriangle();
 
 	SwapBuffers(ghdc);
+	//glFlush();
 }
 
-void drawKundaliShape()
+void drawMultiClorTriangle()
 {
-	glLineWidth(4.0f);
-	glBegin(GL_LINE_LOOP);
+	glLineWidth(5.0f);
+	glBegin(GL_TRIANGLES);
+
 	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex2i(0, 1);
 
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex2i(-1, -1);
 
-	/**glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);**/
-
-	glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
-
-	glEnd();
-}
-
-void drawDiagonalsOfKundali()
-{
-	glLineWidth(4.0f);
-	glBegin(GL_LINES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex2i(1, -1);
 	glEnd();
 }
 
@@ -317,6 +294,10 @@ void resize(int width, int height)
 	if (height == 0)
 		height = 1;
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f,width/height,0.1f,100.0f);
 }
 
 void uninitialize(void)

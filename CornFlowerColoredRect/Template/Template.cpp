@@ -249,7 +249,7 @@ void initialize(void)
 		ghdc = NULL;
 	}
 
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	//resize(WIN_WIDTH, WIN_HEIGHT);
 }

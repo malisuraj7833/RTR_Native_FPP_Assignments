@@ -272,7 +272,6 @@ void display(void)
 
 void drawMultiClorTriangle()
 {
-	glLineWidth(5.0f);
 	glBegin(GL_TRIANGLES);
 
 	glColor3f(1.0f, 0.0f, 0.0f);

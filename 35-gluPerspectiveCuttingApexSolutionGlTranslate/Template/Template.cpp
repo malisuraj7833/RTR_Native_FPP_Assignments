@@ -1,13 +1,15 @@
 #include <windows.h>
 #include <gl/GL.h>
+#include <gl/GLU.h>
 #include<math.h>
 
 #define WIN_WIDTH 800
-#define WIN_HEIGHT 800
+#define WIN_HEIGHT 600
 
 #define PI 3.1415926535898
 
 #pragma comment(lib,"opengl32.lib")
+#pragma comment(lib,"glu32.lib")
 
 //Prototype Of WndProc() declared Globally
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -63,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline Using Native Windowing : Deadhly hollows"),
+		TEXT("OpenGL Fixed Function Pipeline Using Native Windowing : gluPerspective template"),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
 		0,
 		0,
@@ -251,121 +253,56 @@ void initialize(void)
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	//resize(WIN_WIDTH, WIN_HEIGHT);
+	resize(WIN_WIDTH, WIN_HEIGHT);
 }
 
 void display(void)
 {
-
-	void drawDeathlyHollowsSymbol();
+	void drawMultiClorTriangle();
 
 	//code
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	drawDeathlyHollowsSymbol();
+	glTranslatef(0.0f, 0.0f, -3.0f);
+	drawMultiClorTriangle();
 
 	SwapBuffers(ghdc);
-	//glFlush();
 }
 
-void drawDeathlyHollowsSymbol()
+void drawMultiClorTriangle()
 {
-
-	GLint circle_points = 1000;
-	double angle;
-
-	GLfloat xCordUp = 0.0f;
-	GLfloat yCordUp = 0.6f;
-
-	GLfloat xCordLeft = -0.6f;
-	GLfloat yCordLeft = -0.6f;
-
-	GLfloat xCordRight = 0.6f;
-	GLfloat yCordRight = -0.6f;
-
-	//legnth of each side
-	GLfloat sideOne = sqrt(pow((xCordUp - xCordLeft), 2) + pow((yCordUp - yCordLeft), 2));
-	GLfloat sideTwo = sqrt(pow((xCordRight - xCordLeft), 2) + pow((yCordRight - yCordLeft), 2));
-	GLfloat sideThree = sqrt(pow((xCordRight - xCordUp), 2) + pow((yCordRight - yCordUp), 2));
-
-	GLfloat trianglePerimetr(sideOne + sideTwo + sideThree);
-
-	//x,y coordinates of circles center
-	GLfloat xCircleCentr = (((sideOne *xCordRight) + (sideTwo * xCordUp) + (sideThree * xCordLeft)) 
-		/ trianglePerimetr);
-	GLfloat yCircleCentr = (((sideOne *yCordRight) + (sideTwo * yCordUp) + (sideThree * yCordLeft)) / 
-		trianglePerimetr);
-
-	GLfloat semiTrianglePerimeter = trianglePerimetr / 2.0f;
-
-	//triangle area
-	GLfloat triangleArea = sqrt((semiTrianglePerimeter)*(semiTrianglePerimeter - sideOne)*
-		(semiTrianglePerimeter - sideTwo)*(semiTrianglePerimeter - sideThree));
-
-
-	GLfloat glf_CircleRadious = (2 * triangleArea) / trianglePerimetr;
-
-	//------------------------ CALCULATE THE HEIGHT OF THE TRIANGLE ---------------------------
-	GLfloat  glf_XMidOfBase;
-	if (xCordLeft == xCordRight)
-	{
-		glf_XMidOfBase = (xCordLeft);
-	}
-	else
-	{
-		glf_XMidOfBase = (xCordLeft + xCordRight);
-	}
-
-	GLfloat glf_YMidOfBase;
-
-	if (yCordLeft == yCordRight)
-	{
-		glf_YMidOfBase = (yCordLeft);
-	}
-	else
-	{
-		glf_YMidOfBase = (yCordLeft + yCordRight);
-	}
-
-	glBegin(GL_LINES);
+	glLineWidth(5.0f);
+	glBegin(GL_TRIANGLES);
 
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(xCordUp, yCordUp, 0.0f);
-	glVertex3f(xCordLeft, yCordRight, 0.0f);
+	glVertex2i(0, 1);
 
-	glVertex3f(xCordLeft, yCordRight, 0.0f);
-	glVertex3f(xCordRight, yCordRight, 0.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex2i(-1, -1);
 
-	glVertex3f(xCordRight, yCordRight, 0.0f);
-	glVertex3f(xCordUp, yCordUp, 0.0f);
-
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(xCordUp, yCordUp, 0.0f);
-	glVertex3f(glf_XMidOfBase, glf_YMidOfBase, 0.0f);
-
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 1.0f, 1.0f);
-
-	for (int i = 0; i < circle_points; i++)
-	{
-		angle = 2 * PI * i / circle_points;
-		glVertex2f((GLfloat)((glf_CircleRadious *cos(angle)) + xCircleCentr), 
-			(GLfloat)((glf_CircleRadious *sin(angle)) + yCircleCentr));
-	}
-
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex2i(1, -1);
 	glEnd();
 }
+
+
 
 void resize(int width, int height)
 {
 	//code
 	if (height == 0)
 		height = 1;
+
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+
+	
 }
 
 void uninitialize(void)
